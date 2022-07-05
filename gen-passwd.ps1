@@ -12,10 +12,10 @@
 .OUTPUTS
   None
 .NOTES
-  Version:        1.0
+  Version:        2.0
   Author:         dyerseve
-  Creation Date:  2020-12-23
-  Purpose/Change: Initial script development
+  Creation Date:  2022-06-30
+  Purpose/Change: Added a few symbol options to make LastPass happy and not consider the passwords weak
   
 .EXAMPLE
   None
@@ -31,4 +31,7 @@ $Prompt = "Testing Dialog"
 $randompassword = Invoke-WebRequest -UseBasicParsing -Uri https://www.dinopass.com/password/simple | Select-Object -ExpandProperty content
 $randompassword = $randompassword.substring(0,1).toupper() + $randompassword.substring(1).tolower()
 $randompassword = $randompassword + (Get-Random -Minimum 0 -Maximum 9)
+#Add some symbols: ! # $ ^ 
+$randompassword = $randompassword + (33, 35, 36, 37, 46, 94 | Get-Random | % {[char]$_})
 $randompassword | clip
+
